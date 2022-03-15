@@ -57,9 +57,9 @@ std::ostream& operator<<(std::ostream& os, const Vector3& vec) {
 
 int main() {
     Vector<Vector3> vec;
-    vec.PushBack(Vector3());
-    vec.PushBack(Vector3(1.0f));
-    vec.PushBack(Vector3(1.0f, 2.0f, 3.0f));
+    vec.EmplaceBack();
+    vec.EmplaceBack(1.0f);
+    vec.EmplaceBack(1.0f, 2.0f, 3.0f);
     PrintVector(vec);
 
     return 0;

@@ -5,6 +5,7 @@ template <typename T>
 class Vector {
 public:
     Vector() { ReAlloc(2); }
+    ~Vector() { delete[] m_Data; }
 
     void PushBack(const T& value) {
         // check the space
@@ -22,6 +23,24 @@ public:
 
         // push the value back and update the size
         m_Data[m_Size++] = std::move(value);
+    }
+
+    template<typename... Args>
+    T& EmplaceBack(Args&&... args) {
+        // check the space
+        if (m_Size >= m_Capacity)
+            ReAlloc(m_Size + m_Size);
+
+        // Placement new
+        new (&m_Data[m_Size]) T(std::forward<Args>(args)...);
+        return m_Data[m_Size++];
+    }
+
+    void PopBack() {
+        if (m_Size > 0) {
+            --m_Size;
+            m_Data[m_Size].~T();
+        }
     }
 
     T& operator[](size_t index) { return m_Data[index]; }
