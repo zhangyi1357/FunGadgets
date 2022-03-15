@@ -61,6 +61,9 @@ int main() {
     vec.EmplaceBack(1.0f);
     vec.EmplaceBack(1.0f, 2.0f, 3.0f);
     PrintVector(vec);
+    vec.PopBack();
+    vec.PopBack();
+    PrintVector(vec);
 
     return 0;
 }
