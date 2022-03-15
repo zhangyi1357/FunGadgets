@@ -15,7 +15,7 @@ public:
         m_Data[m_Size++] = value;
     }
 
-    void PushBack(const T&& value) {
+    void PushBack(T&& value) {
         // check the space
         if (m_Size >= m_Capacity)
             ReAlloc(m_Size + m_Size);
