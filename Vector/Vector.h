@@ -5,7 +5,10 @@ template <typename T>
 class Vector {
 public:
     Vector() { ReAlloc(2); }
-    ~Vector() { delete[] m_Data; }
+    ~Vector() {
+        Clear();
+        ::operator delete(m_Data, m_Capacity * sizeof(T));
+    }
 
     void PushBack(const T& value) {
         // check the space
@@ -43,6 +46,13 @@ public:
         }
     }
 
+    void Clear() {
+        for (int i = 0; i < m_Size; ++i)
+            m_Data[i].~T();
+
+        m_Size = 0;
+    }
+
     T& operator[](size_t index) { return m_Data[index]; }
     const T& operator[](size_t index) const { return m_Data[index]; }
 
@@ -51,7 +61,7 @@ public:
 private:
     void ReAlloc(size_t newCapacity) {
         // allocate space for new block
-        T* newBlock = new T[newCapacity];
+        T* newBlock = (T*)::operator new(newCapacity * sizeof(T));
 
         // ensure no overflow
         if (newCapacity < m_Size)
@@ -59,10 +69,11 @@ private:
 
         // move all the elements to the new block
         for (int i = 0; i < m_Size; ++i)
-            newBlock[i] = std::move(m_Data[i]);
+            new(&newBlock[i]) T(std::move(m_Data[i]));
 
         // delete the old space and update old members
-        delete[] m_Data;
+        Clear();
+        ::operator delete(m_Data, m_Capacity * sizeof(T));
         m_Data = newBlock;
         m_Capacity = newCapacity;
     }
