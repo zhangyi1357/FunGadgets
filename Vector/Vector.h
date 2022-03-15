@@ -15,6 +15,15 @@ public:
         m_Data[m_Size++] = value;
     }
 
+    void PushBack(const T&& value) {
+        // check the space
+        if (m_Size >= m_Capacity)
+            ReAlloc(m_Size + m_Size);
+
+        // push the value back and update the size
+        m_Data[m_Size++] = std::move(value);
+    }
+
     T& operator[](size_t index) { return m_Data[index]; }
     const T& operator[](size_t index) const { return m_Data[index]; }
 
@@ -31,7 +40,7 @@ private:
 
         // move all the elements to the new block
         for (int i = 0; i < m_Size; ++i)
-            newBlock[i] = m_Data[i];
+            newBlock[i] = std::move(m_Data[i]);
 
         // delete the old space and update old members
         delete[] m_Data;
