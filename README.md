@@ -1,6 +1,6 @@
-# Little-stuff
+# Fun Gadgets
 
-Some little programs for learning C++ and coding
+Fun code snippts for learning C++
 
 博文：
 
