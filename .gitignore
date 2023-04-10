@@ -6,4 +6,6 @@
 
 *.exe
 
+*.out
+
 .vscode/
