@@ -1,24 +1,24 @@
-#include <iostream>
 #include <cstring>
+#include <iostream>
 
 class String {
-public:
+  public:
     String() = default;
-    String(const char* string) {
+    String(const char *string) {
         printf("Created!\n");
         m_Size = strlen(string);
         m_Data = new char[m_Size];
         memcpy(m_Data, string, m_Size);
     }
 
-    String(const String& other) {
+    String(const String &other) {
         printf("Copied!\n");
         m_Size = other.m_Size;
         m_Data = new char[m_Size];
         memcpy(m_Data, other.m_Data, m_Size);
     }
 
-    String(String&& other) {
+    String(String &&other) {
         printf("Moved!\n");
         m_Size = other.m_Size;
         m_Data = other.m_Data;
@@ -31,7 +31,7 @@ public:
         delete[] m_Data;
     }
 
-    String& operator=(String&& other) {
+    String &operator=(String &&other) {
         printf("Moved\n");
         if (this != &other) {
             delete[] m_Data;
@@ -51,27 +51,26 @@ public:
 
         printf("\n");
     }
-private:
-    char* m_Data;
+
+  private:
+    char *m_Data;
     uint32_t m_Size;
 };
 
 class Entity {
-public:
+  public:
     // Entity(const String& name)
     //     : m_Name(name) {}
 
-    Entity(String&& name)
-        : m_Name(std::move(name)) {}
+    Entity(String &&name) : m_Name(std::move(name)) {}
 
-    void PrintName() {
-        m_Name.Print();
-    }
-private:
+    void PrintName() { m_Name.Print(); }
+
+  private:
     String m_Name;
 };
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
     // Entity entity(String("Cherno"));
     // entity.PrintName();
 

@@ -2,8 +2,7 @@
 
 #include "Vector.h"
 
-template<typename T>
-void PrintVector(const Vector<T>& vector) {
+template <typename T> void PrintVector(const Vector<T> &vector) {
     for (size_t i = 0; i < vector.Size(); ++i)
         std::cout << vector[i] << std::endl;
 
@@ -11,23 +10,18 @@ void PrintVector(const Vector<T>& vector) {
 }
 
 class Vector3 {
-public:
-    Vector3() {
+  public:
+    Vector3() { m_MemoryBlock = new int[5]; }
+    Vector3(float scalar) : x(scalar), y(scalar), z(scalar) {
         m_MemoryBlock = new int[5];
     }
-    Vector3(float scalar)
-        : x(scalar), y(scalar), z(scalar) {
-        m_MemoryBlock = new int[5];
-    }
-    Vector3(float x, float y, float z)
-        : x(x), y(y), z(z) {
+    Vector3(float x, float y, float z) : x(x), y(y), z(z) {
         m_MemoryBlock = new int[5];
     }
 
-    Vector3(const Vector3& other) = delete;
+    Vector3(const Vector3 &other) = delete;
 
-    Vector3(Vector3&& other)
-        : x(other.x), y(other.y), z(other.z) {
+    Vector3(Vector3 &&other) : x(other.x), y(other.y), z(other.z) {
         std::cout << "Move" << std::endl;
         m_MemoryBlock = other.m_MemoryBlock;
         other.m_MemoryBlock = nullptr;
@@ -37,32 +31,31 @@ public:
         delete[] m_MemoryBlock;
     }
 
-    Vector3& operator=(const Vector3& other) {
+    Vector3 &operator=(const Vector3 &other) {
         std::cout << "Copy" << std::endl;
         x = other.x;
         y = other.y;
         z = other.z;
         return *this;
     }
-    Vector3& operator=(Vector3&& other) {
+    Vector3 &operator=(Vector3 &&other) {
         std::cout << "Move" << std::endl;
         x = other.x;
         y = other.y;
         z = other.z;
         return *this;
     }
-    friend std::ostream& operator<<(std::ostream&, const Vector3&);
-private:
-    float x = 0.0f, y = 0.0f, z = 0.0f;
-    int* m_MemoryBlock = nullptr;
+    friend std::ostream &operator<<(std::ostream &, const Vector3 &);
 
+  private:
+    float x = 0.0f, y = 0.0f, z = 0.0f;
+    int *m_MemoryBlock = nullptr;
 };
 
-std::ostream& operator<<(std::ostream& os, const Vector3& vec) {
+std::ostream &operator<<(std::ostream &os, const Vector3 &vec) {
     os << vec.x << ", " << vec.y << ", " << vec.z;
     return os;
 }
-
 
 int main() {
     {
