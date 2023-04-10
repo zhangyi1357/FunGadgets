@@ -1,6 +1,6 @@
 # Fun Gadgets
 
-Fun code snippts for learning C++
+Fun code snippets for learning C++
 
 博文：
 
