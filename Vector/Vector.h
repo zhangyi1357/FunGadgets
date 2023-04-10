@@ -1,6 +1,9 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
+#include <stddef.h>
+#include <utility>
+
 template <typename T>
 class Vector {
 public:
@@ -84,6 +87,5 @@ private:
     size_t m_Size = 0;
     size_t m_Capacity = 0;
 };
-
 
 #endif  // !_VECTOR_H_

@@ -1,6 +1,8 @@
 #ifndef _ARRAY_H_
 #define _ARRAY_H_
 
+#include <cstddef>
+
 template <typename T, size_t S>
 class Array {
 public:
